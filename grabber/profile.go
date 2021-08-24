@@ -8,9 +8,9 @@ import (
 )
 
 type userProfile struct {
-	Login	string
-	Id		string
-	Guild	string
+	Login string
+	Id    string
+	Guild string
 }
 
 func loadProfile(agent discordAgent, id string) (userProfile, error) {
@@ -66,7 +66,7 @@ func createProfile(agent discordAgent) {
 		return
 	}
 
-	profile := userProfile {
+	profile := userProfile{
 		Login: agent.message.Author.Username,
 		Id:    agent.message.Author.ID,
 		Guild: args[1],

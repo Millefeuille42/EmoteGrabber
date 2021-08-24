@@ -1,6 +1,6 @@
 version: "3"
 services:
-  segbot:
+  grabber:
     build: ./
     image: grabber
     restart: always
