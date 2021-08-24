@@ -1,0 +1,12 @@
+version: "3"
+services:
+  segbot:
+    build: ./
+    image: grabber
+    restart: always
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+    volumes:
+      - grabberData:/grabber/data
+volumes:
+  grabberData: {}

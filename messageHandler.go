@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
+	"github.com/gofiber/fiber/v2/utils"
 	"github.com/vincent-petithory/dataurl"
-	"math/rand"
 	"strings"
 )
 
@@ -22,12 +22,13 @@ func getFromLink(agent discordAgent) {
 	}
 	data := dataurl.New([]byte(content), "image/png")
 	fmt.Println(data.String())
-	id := rand.Int()
+	id := utils.UUID()
+	id = id[:7]
 	profile, err := loadProfile(agent, "")
 	if err != nil {
 		return
 	}
-	_, err = agent.session.GuildEmojiCreate(profile.Guild, fmt.Sprintf("%d", id), data.String(), nil)
+	_, err = agent.session.GuildEmojiCreate(profile.Guild, id, data.String(), nil)
 	if err != nil {
 		_, _ = agent.session.ChannelMessageSend(agent.message.ChannelID, "Cannot create emote")
 		return
