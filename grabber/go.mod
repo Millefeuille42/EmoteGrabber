@@ -1,4 +1,4 @@
-module EmoteGrabber
+module grabber
 
 go 1.16
 
