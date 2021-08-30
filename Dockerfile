@@ -5,4 +5,4 @@ WORKDIR /grabber
 
 RUN go install .
 
-CMD grabber ./dev.env
+CMD grabber

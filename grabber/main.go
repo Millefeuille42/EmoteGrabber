@@ -7,7 +7,6 @@ import (
 	"time"
 )
 
-var gBot *discordgo.Session
 var ownerID string = "268431730967314435" //Please change this when using my bot
 
 // startBot Starts discord bot
@@ -32,16 +31,12 @@ func startBot() *discordgo.Session {
 }
 
 func main() {
-	if len(os.Args) < 2 {
-		_, _ = fmt.Fprintln(os.Stderr, "You must provide and env file")
-		return
-	}
 	err := createDirIfNotExist("./data")
 	if err != nil {
 		return
 	}
 
-	gBot = startBot()
+	_ = startBot()
 	for {
 		time.Sleep(time.Second * 3)
 	}

@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/bwmarrin/discordgo"
-	"io/ioutil"
-	"net/http"
 	"os"
 	"os/signal"
 	"runtime/debug"
@@ -41,16 +39,6 @@ func createFileIfNotExist(path string) (bool, error) {
 	return true, nil
 }
 
-// Find Check if val exists in Slice, true if it exists
-func Find(slice []string, val string) bool {
-	for _, item := range slice {
-		if item == val {
-			return true
-		}
-	}
-	return false
-}
-
 // logError Prints error + StackTrace to stderr if error
 func logError(err error) {
 	if err != nil {
@@ -77,12 +65,12 @@ func setUpCloseHandler(session *discordgo.Session) {
 	}()
 }
 
-// ReadHTTPResponse read and return an httpresponse body
-func ReadHTTPResponse(response *http.Response) ([]byte, error) {
-	body, err := ioutil.ReadAll(response.Body)
-	defer response.Body.Close()
-	if err != nil {
-		return []byte(""), err
+// logErrorToChan Sends plain error to command channel
+func logErrorToChan(agent discordAgent, err error) {
+	if err == nil {
+		return
 	}
-	return body, nil
+	logError(err)
+	_, _ = agent.session.ChannelMessageSend(agent.channel,
+		fmt.Sprintf("An Error Occured, Please Try Again Later {%s}", err.Error()))
 }
